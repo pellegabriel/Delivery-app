@@ -7,6 +7,8 @@ import customMapStyle from './customMapStyle.json';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../android/app/src/types/types';
 import { GOOGLE_MAPS_APIKEY } from '@env';
+import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+ 
 
 type MapScreenRouteProp = RouteProp<RootStackParamList, 'Map'>;
 
@@ -15,16 +17,17 @@ type Props = {
   navigation: any;
 };
 
-type Store = {
-  geometry: {
-    location: {
-      lat: number,
-      lng: number,
-    },
-  },
-  name: string,
-  rating: number,
+type CompanyData = {
+  name: string;
+  rating: number;
+  address: {
+    coordinates: {
+      latitude: number;
+      longitude: number;
+    };
+  };
 };
+
 
 const MapScreen: React.FC<Props> = ({ navigation }) => {
   const [latitude, setLatitude] = useState<number>(0);
@@ -43,23 +46,26 @@ const MapScreen: React.FC<Props> = ({ navigation }) => {
         setLatitude(latitude);
         setLongitude(longitude);
         setLocationLoaded(true);
-        fetch(
-          `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${latitude},${longitude}&radius=25000&type=store&key=${GOOGLE_MAPS_APIKEY}`
-        )
-          .then(response => response.json())
-          .then(data => {
-            const stores = data.results.map((store: Store) => ({
-              coordinate: {
-                latitude: store.geometry.location.lat,
-                longitude: store.geometry.location.lng,
-              },
-              title: store.name,
-              rating: store.rating,
-            }));
-            setMarkers(stores);
+  
+        firestore()
+          .collection('companies')
+          .get()
+          .then((querySnapshot: FirebaseFirestoreTypes.QuerySnapshot) => {
+            const companies = querySnapshot.docs.map((doc: FirebaseFirestoreTypes.QueryDocumentSnapshot) => {
+              const data = doc.data() as CompanyData;
+              return {
+                coordinate: {
+                  latitude: data.address.coordinates.latitude,
+                  longitude: data.address.coordinates.longitude,
+                },
+                title: data.name,
+                rating: data.rating, 
+              };
+            });
+            setMarkers(companies);
           })
-          .catch(error => console.log(error));
-
+          .catch((error: Error) => console.log(error));
+  
         mapRef.current?.animateToRegion({
           latitude: latitude,
           longitude: longitude,
