@@ -1,4 +1,36 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Delivery App
+
+This is a project that showcases a delivery position on a map using TypeScript, Java, and Objective-C.
+
+# Table of Contents
+* Features
+* Getting Started
+* Installation
+* Usage
+* Folder Structure
+* Contributing
+* License
+
+# Features
+* **Map Integration**: Displays delivery positions on a map.
+* **Cross-Platform**: Supports both Android and iOS platforms.
+* **Real-Time Updates**: Provides real-time updates for delivery status.
+
+# Getting Started
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+# Prerequisites
+* Node.js (v14 or later)
+* npm (v6 or later) or yarn (v1.22 or later)
+* Xcode for iOS development
+* Android Studio for Android development
+
+# Installation
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/delivery-app.git
+cd delivery-app
 
 # Getting Started
 
