@@ -11,34 +11,23 @@ const FormScreen = ({ navigation }: StackScreenProps<RootStackParamList, 'Form'>
   const handlePress = () => {
     navigation.navigate('Map');
   }
-
-  
-
-  
   return (
     <View style={styles.container1}>
     <View style={styles.containerImage}>
     <Image source={require('../icons/Teiki.png')} style={styles.imageRegister}/>
     </View >
-
     <View style={styles.container2}>
     <ImageBackground source={require('../icons/Fondo.png')} 
     style={styles.image}
     resizeMode="contain"
     >
-
     <View style={styles.container3}>
-
-
       <View >
       <Text style={styles.text}>Elige cómo quieres ingresar</Text>
-
         <TouchableOpacity style={styles.button} onPress={handlePress}>
             <Text style={styles.buttonText}>Continuar con Google</Text>
         </TouchableOpacity>
-        
       </View>
-
         <View style={styles.separatorContainer}>
       <View style={styles.separatorLine} />
       <Text style={styles.separatorText}>o</Text>
